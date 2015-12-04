@@ -51,7 +51,20 @@ var demo =
 	
 	var _router2 = _interopRequireDefault(_router);
 	
+	var _main = __webpack_require__(2);
+	
+	var _main2 = _interopRequireDefault(_main);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Application = Marionette.Application.extend({
+	    initialize: function initialize(options) {
+	        this.layout = new _main2.default();
+	        this.layout.render();
+	    }
+	});
+	
+	var app = new Application();
 	
 	var router = new _router2.default();
 	
@@ -59,44 +72,20 @@ var demo =
 
 /***/ },
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	
-	var _hello = __webpack_require__(2);
-	
-	var _hello2 = _interopRequireDefault(_hello);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
 	exports.default = Backbone.Router.extend({
 	
 	  routes: {
-	    '': 'dashboard',
-	    'about': 'about'
+	    '': 'index'
 	  },
 	
-	  initialize: function initialize() {
-	    $('body').append('<div id="js-app"></div>');
-	  },
-	  dashboard: function dashboard() {
-	    var helloView = new _hello2.default({
-	      template: _.template('Hello <%= name %> !')
-	    }).render();
-	
-	    $('#js-app').empty().append(helloView.$el);
-	  },
-	  about: function about() {
-	    var helloView = new _hello2.default({
-	      template: _.template('Im the about page')
-	    }).render();
-	
-	    $('#js-app').empty().append(helloView.$el);
-	  }
+	  index: function index() {}
 	});
 
 /***/ },
@@ -106,24 +95,22 @@ var demo =
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	
-	var _template = __webpack_require__(3);
+	var _mainTpl = __webpack_require__(3);
 	
-	var _template2 = _interopRequireDefault(_template);
+	var _mainTpl2 = _interopRequireDefault(_mainTpl);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = Marionette.ItemView.extend({
+	exports.default = Marionette.LayoutView.extend({
+	    el: '#content',
+	    template: _mainTpl2.default,
 	
-	  template: _template2.default,
-	
-	  serializeData: function serializeData() {
-	    return {
-	      name: 'world'
-	    };
-	  }
+	    regions: {
+	        content: '.app__content'
+	    }
 	});
 
 /***/ },
@@ -132,11 +119,7 @@ var demo =
 
 	var Handlebars = __webpack_require__(4);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    var helper;
-	
-	  return "Hello "
-	    + container.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"name","hash":{},"data":data}) : helper)))
-	    + "!";
+	    return "<div class=\"application__content\"></div>\n";
 	},"useData":true});
 
 /***/ },
